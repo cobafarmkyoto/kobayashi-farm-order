@@ -1,0 +1,236 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>小林ふぁ〜む 注文計算</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#f7f5ef;color:#333;font-family:-apple-system,BlinkMacSystemFont,"Noto Sans JP","Yu Gothic",sans-serif}
+.wrap{max-width:620px;margin:auto;padding:18px 14px 34px}
+h1{font-size:23px;margin:5px 0 18px}
+.card{background:#fff;border-radius:16px;padding:18px;margin-bottom:13px;box-shadow:0 2px 10px rgba(0,0,0,.06)}
+.section-title{font-weight:800;margin-bottom:10px;font-size:17px}
+.product-line{display:grid;grid-template-columns:1fr 78px 46px;gap:7px;align-items:center;margin:10px 0}
+.product-name{font-weight:650;line-height:1.45}
+.product-name small{font-weight:400;color:#777}
+input[type=number],select{width:100%;font-size:17px;padding:10px 9px;border:1px solid #cfcfcf;border-radius:10px;background:#fff}
+input[type=number]{text-align:right}
+.check{display:flex;align-items:center;gap:8px;font-size:16px;font-weight:700;margin-top:15px}
+.check input{width:20px;height:20px}
+.result{line-height:1.95;font-size:16px}
+.result-row{display:flex;justify-content:space-between;gap:12px}
+.total{border-top:1px solid #ddd;margin-top:10px;padding-top:11px;font-size:24px;font-weight:800}
+.hint{font-size:13px;color:#777;line-height:1.7}
+.notice{font-size:13px;color:#8a5a00;line-height:1.6;margin-top:12px}
+hr{border:0;border-top:1px solid #ddd;margin:16px 0 12px}
+</style>
+</head>
+<body>
+<div class="wrap">
+<h1>🍅 小林ふぁ〜む 注文計算</h1>
+
+<div class="card">
+  <div class="section-title">単品</div>
+  <div class="product-line"><div class="product-name">180ml　1,200円（税抜）<br><small>0.35kg</small></div><input id="q180" type="number" min="0" step="1" value="0" inputmode="numeric"><div>本</div></div>
+  <div class="product-line"><div class="product-name">500ml　3,000円（税抜）<br><small>0.95kg</small></div><input id="q500" type="number" min="0" step="1" value="0" inputmode="numeric"><div>本</div></div>
+  <div class="product-line"><div class="product-name">720ml　4,000円（税抜）<br><small>1.25kg</small></div><input id="q720" type="number" min="0" step="1" value="0" inputmode="numeric"><div>本</div></div>
+
+  <hr>
+  <div class="section-title">セット商品</div>
+  <div class="product-line"><div class="product-name">① 180ml 6本セット　7,700円（税抜）<br><small>2.10kg・指定80サイズ</small></div><input id="s180_6" type="number" min="0" step="1" value="0" inputmode="numeric"><div>セット</div></div>
+  <div class="product-line"><div class="product-name">② 180ml 8本セット　10,100円（税抜）<br><small>2.80kg・指定80サイズ</small></div><input id="s180_8" type="number" min="0" step="1" value="0" inputmode="numeric"><div>セット</div></div>
+  <div class="product-line"><div class="product-name">③ 180ml 10本セット　12,500円（税抜）<br><small>3.50kg・指定80サイズ</small></div><input id="s180_10" type="number" min="0" step="1" value="0" inputmode="numeric"><div>セット</div></div>
+  <div class="product-line"><div class="product-name">④ 180ml 2本セット　2,650円（税抜）<br><small>0.70kg・指定60サイズ</small></div><input id="s180_2" type="number" min="0" step="1" value="0" inputmode="numeric"><div>セット</div></div>
+  <div class="product-line"><div class="product-name">⑤ 180ml 3本セット　3,850円（税抜）<br><small>1.05kg・指定60サイズ</small></div><input id="s180_3" type="number" min="0" step="1" value="0" inputmode="numeric"><div>セット</div></div>
+  <div class="product-line"><div class="product-name">⑥ 720ml 1本セット　4,500円（税抜）<br><small>1.25kg・指定60サイズ</small></div><input id="s720_1" type="number" min="0" step="1" value="0" inputmode="numeric"><div>セット</div></div>
+  <div class="product-line"><div class="product-name">⑦ 720ml 2本セット　8,500円（税抜）<br><small>2.50kg・指定80サイズ</small></div><input id="s720_2" type="number" min="0" step="1" value="0" inputmode="numeric"><div>セット</div></div>
+  <div class="product-line"><div class="product-name">⑧ 720ml 3本セット　12,500円（税抜）<br><small>3.75kg・指定80サイズ</small></div><input id="s720_3" type="number" min="0" step="1" value="0" inputmode="numeric"><div>セット</div></div>
+
+  <hr>
+  <div class="section-title">プレミアム商品</div>
+  <div class="product-line"><div class="product-name">⑨ プレミアム180ml　2,500円（税抜）<br><small>0.35kg</small></div><input id="p180_1" type="number" min="0" step="1" value="0" inputmode="numeric"><div>本</div></div>
+  <div class="product-line"><div class="product-name">⑩ プレミアム360ml　5,000円（税抜）<br><small>0.65kg</small></div><input id="p360_1" type="number" min="0" step="1" value="0" inputmode="numeric"><div>本</div></div>
+  <div class="product-line"><div class="product-name">⑪ プレミアム180ml 6本セット　15,500円（税抜）<br><small>2.10kg・指定80サイズ</small></div><input id="p180_6" type="number" min="0" step="1" value="0" inputmode="numeric"><div>セット</div></div>
+  <div class="product-line"><div class="product-name">⑫ プレミアム720ml　10,000円（税抜）<br><small>1.25kg</small></div><input id="p720_1" type="number" min="0" step="1" value="0" inputmode="numeric"><div>本</div></div>
+  <div class="product-line"><div class="product-name">⑬ プレミアム720ml 木箱入り　12,000円（税抜）<br><small>指定60サイズ</small></div><input id="p720_box" type="number" min="0" step="1" value="0" inputmode="numeric"><div>個</div></div>
+
+  <label class="check">
+    <input id="cod" type="checkbox">
+    <span>代引きあり（400円・税抜）</span>
+  </label>
+  <div class="notice">※代引き手数料は400円＋標準税率10%＝440円（税込）で計算。</div>
+</div>
+
+<div class="card">
+  <div class="section-title">お届け先</div>
+  <select id="pref"></select>
+</div>
+
+<div class="card result">
+  <div class="result-row"><span>商品代（税抜）</span><strong id="subtotal">0円</strong></div>
+  <div class="result-row"><span>消費税（8%）</span><strong id="tax">0円</strong></div>
+  <div class="result-row"><span>商品代（税込）</span><strong id="productIncl">0円</strong></div>
+  <div class="result-row"><span>総重量</span><strong id="weight">0.00kg</strong></div>
+  <div class="result-row"><span>配送サイズ</span><strong id="size">—</strong></div>
+  <div class="result-row"><span>送料（税込）</span><strong id="shipping">—</strong></div>
+  <div class="result-row"><span>代引き手数料（税込）</span><strong id="codFee">0円</strong></div>
+  <div class="result-row total"><span>お支払額</span><strong id="total">—</strong></div>
+</div>
+
+<div class="card hint">
+送料サイズは「未満」で判定します。<br>
+2kg未満＝60、5kg未満＝80、10kg未満＝100、15kg未満＝120、20kg未満＝140。<br>
+2kgちょうどは80、5kgちょうどは100、10kgちょうどは120、15kgちょうどは140。20kg以上は要確認。<br>
+⑬木箱入りは単独注文なら60サイズ。ほかの商品と混載した場合は木箱の重量が未設定のため要確認。
+  <br>①②③⑦⑧⑪⑬は重量を使わず、それぞれ指定サイズの別個口として送料を加算します。</div>
+</div>
+
+<script>
+const shipping={
+"北海道":[1500,1800,2100,2500,2700],
+"青森県":[950,1200,1500,1800,2100],"岩手県":[950,1200,1500,1800,2100],"秋田県":[950,1200,1500,1800,2100],
+"宮城県":[850,1100,1400,1700,2000],"山形県":[850,1100,1400,1700,2000],"福島県":[850,1100,1400,1700,2000],
+"茨城県":[700,1000,1300,1600,1900],"栃木県":[700,1000,1300,1600,1900],"群馬県":[700,1000,1300,1600,1900],
+"埼玉県":[700,1000,1300,1600,1900],"千葉県":[700,1000,1300,1600,1900],"東京都":[700,1000,1300,1600,1900],
+"神奈川県":[700,1000,1300,1600,1900],"山梨県":[700,1000,1300,1600,1900],"新潟県":[700,1000,1300,1600,1900],"長野県":[700,1000,1300,1600,1900],
+"富山県":[600,850,1100,1400,1700],"石川県":[600,850,1100,1400,1700],"福井県":[600,850,1100,1400,1700],
+"静岡県":[550,800,1100,1400,1700],"愛知県":[550,800,1100,1400,1700],"三重県":[550,800,1100,1400,1700],"岐阜県":[550,800,1100,1400,1700],
+"滋賀県":[550,800,1100,1400,1700],"京都府":[550,800,1100,1400,1700],"大阪府":[550,800,1100,1400,1700],"兵庫県":[550,800,1100,1400,1700],
+"奈良県":[550,800,1100,1400,1700],"和歌山県":[550,800,1100,1400,1700],"鳥取県":[550,800,1100,1400,1700],"島根県":[550,800,1100,1400,1700],
+"岡山県":[550,800,1100,1400,1700],"広島県":[550,800,1100,1400,1700],"山口県":[550,800,1100,1400,1700],
+"香川県":[700,950,1300,1600,1900],"徳島県":[700,950,1300,1600,1900],"愛媛県":[700,950,1300,1600,1900],"高知県":[700,950,1300,1600,1900],
+"福岡県":[700,950,1300,1600,1900],"佐賀県":[700,950,1300,1600,1900],"長崎県":[700,950,1300,1600,1900],"熊本県":[700,950,1300,1600,1900],
+"大分県":[700,950,1300,1600,1900],"宮崎県":[700,950,1300,1600,1900],"鹿児島県":[700,950,1300,1600,1900],"沖縄県":[1500,2100,2800,3500,4100]
+};
+const prefs=document.getElementById("pref");
+Object.keys(shipping).forEach(p=>prefs.add(new Option(p,p)));
+prefs.value="京都府";
+const ids=["q180","q500","q720","s180_6","s180_8","s180_10","s180_2","s180_3","s720_1","s720_2","s720_3","p180_1","p360_1","p180_6","p720_1","p720_box","cod","pref"];
+ids.forEach(id=>{document.getElementById(id).addEventListener("input",calc);document.getElementById(id).addEventListener("change",calc);});
+function yen(n){return Math.round(n).toLocaleString("ja-JP")+"円";}
+function calc(){
+  const v=id=>Math.max(0,parseInt(document.getElementById(id).value,10)||0);
+
+  const q180=v("q180"),q500=v("q500"),q720=v("q720");
+  const s180_6=v("s180_6"),s180_8=v("s180_8"),s180_10=v("s180_10"),s180_2=v("s180_2"),s180_3=v("s180_3");
+  const s720_1=v("s720_1"),s720_2=v("s720_2"),s720_3=v("s720_3");
+  const p180_1=v("p180_1"),p360_1=v("p360_1"),p180_6=v("p180_6"),p720_1=v("p720_1"),p720_box=v("p720_box");
+
+  const items = [
+    {id:"q180", name:"180ml単品", qty:q180, price:1200, weight:.35, fixedSize:null},
+    {id:"q500", name:"500ml単品", qty:q500, price:3000, weight:.95, fixedSize:null},
+    {id:"q720", name:"720ml単品", qty:q720, price:4000, weight:1.25, fixedSize:null},
+
+    {id:"s180_6", name:"① 180ml 6本セット", qty:s180_6, price:7700, weight:null, fixedSize:80},
+    {id:"s180_8", name:"② 180ml 8本セット", qty:s180_8, price:10100, weight:null, fixedSize:80},
+    {id:"s180_10", name:"③ 180ml 10本セット", qty:s180_10, price:12500, weight:null, fixedSize:80},
+
+    {id:"s180_2", name:"④ 180ml 2本セット", qty:s180_2, price:2650, weight:.70, fixedSize:null},
+    {id:"s180_3", name:"⑤ 180ml 3本セット", qty:s180_3, price:3850, weight:1.05, fixedSize:null},
+    {id:"s720_1", name:"⑥ 720ml 1本セット", qty:s720_1, price:4500, weight:1.25, fixedSize:null},
+
+    {id:"s720_2", name:"⑦ 720ml 2本セット", qty:s720_2, price:8500, weight:null, fixedSize:80},
+    {id:"s720_3", name:"⑧ 720ml 3本セット", qty:s720_3, price:12500, weight:null, fixedSize:80},
+
+    {id:"p180_1", name:"⑨ プレミアム180ml", qty:p180_1, price:2500, weight:.35, fixedSize:null},
+    {id:"p360_1", name:"⑩ プレミアム360ml", qty:p360_1, price:5000, weight:.65, fixedSize:null},
+    {id:"p180_6", name:"⑪ プレミアム180ml 6本セット", qty:p180_6, price:15500, weight:null, fixedSize:80},
+    {id:"p720_1", name:"⑫ プレミアム720ml", qty:p720_1, price:10000, weight:1.25, fixedSize:null},
+    {id:"p720_box", name:"⑬ プレミアム720ml 木箱入り", qty:p720_box, price:12000, weight:null, fixedSize:60}
+  ];
+
+  const subtotal=items.reduce((sum,item)=>sum+item.qty*item.price,0);
+  const tax=Math.round(subtotal*0.08);
+  const productIncl=subtotal+tax;
+
+  document.getElementById("subtotal").textContent=yen(subtotal);
+  document.getElementById("tax").textContent=yen(tax);
+  document.getElementById("productIncl").textContent=yen(productIncl);
+
+  if(subtotal===0){
+    document.getElementById("weight").textContent="0.00kg";
+    document.getElementById("size").textContent="—";
+    document.getElementById("shipping").textContent="—";
+    document.getElementById("codFee").textContent="0円";
+    document.getElementById("total").textContent="—";
+    return;
+  }
+
+  const restricted=items.filter(item=>item.fixedSize!==null && item.qty>0);
+  const normal=items.filter(item=>item.fixedSize===null && item.qty>0);
+
+  // 同梱不可商品は、重量を見ず「1商品×数量＝数量個口」でそれぞれ指定サイズの送料を加算。
+  let shippingTotal=0;
+  let parcelCount=0;
+  const parcelSummary=[];
+
+  for(const item of restricted){
+    const sizeIndex=[60,80,100,120,140].indexOf(item.fixedSize);
+    const unitFreight=shipping[prefs.value][sizeIndex];
+    shippingTotal += unitFreight * item.qty;
+    parcelCount += item.qty;
+    parcelSummary.push(item.name + "： " + item.qty + "個口・" + item.fixedSize + "サイズ");
+  }
+
+  // 同梱可能商品はまとめて重量計算し、必要な個口数に分ける。
+  // まず全重量を計算。
+  const normalWeight=normal.reduce((sum,item)=>sum+item.weight*item.qty,0);
+
+  // 「未満」判定のサイズ上限
+  const limits=[2,5,10,15,20];
+  const sizes=[60,80,100,120,140];
+
+  function sizeIndexForWeight(w){
+    if(w<2)return 0;
+    if(w<5)return 1;
+    if(w<10)return 2;
+    if(w<15)return 3;
+    if(w<20)return 4;
+    return -1;
+  }
+
+  let normalParcelCount=0;
+  let normalSizeText="";
+
+  if(normal.length>0){
+    if(normalWeight<20){
+      const idx=sizeIndexForWeight(normalWeight);
+      shippingTotal += shipping[prefs.value][idx];
+      parcelCount += 1;
+      normalParcelCount=1;
+      normalSizeText=sizes[idx]+"サイズ";
+    }else{
+      document.getElementById("weight").textContent=normalWeight.toFixed(2)+"kg";
+      document.getElementById("size").textContent="20kg以上（要確認）";
+      document.getElementById("shipping").textContent="要確認";
+      document.getElementById("codFee").textContent="要確認";
+      document.getElementById("total").textContent="要確認";
+      return;
+    }
+  }
+
+  // 表示用
+  if(normal.length>0 && restricted.length>0){
+    document.getElementById("weight").textContent=normalWeight.toFixed(2)+"kg（同梱可能分）";
+    document.getElementById("size").textContent=normalSizeText+" ＋ "+parcelSummary.join(" ＋ ");
+  }else if(restricted.length>0){
+    document.getElementById("weight").textContent="—（セット指定サイズで発送）";
+    document.getElementById("size").textContent=parcelSummary.join(" ＋ ");
+  }else{
+    document.getElementById("weight").textContent=normalWeight.toFixed(2)+"kg";
+    document.getElementById("size").textContent=normalSizeText;
+  }
+
+  document.getElementById("shipping").textContent=yen(shippingTotal);
+
+  // 代引き手数料は、複数個口でも1注文につき440円（税込）を1回だけ加算。
+  const codFee=document.getElementById("cod").checked ? 440 : 0;
+  document.getElementById("codFee").textContent=yen(codFee);
+
+  document.getElementById("total").textContent=yen(productIncl+shippingTotal+codFee);
+}
+calc();
+</script>
+</body>
+</html>
